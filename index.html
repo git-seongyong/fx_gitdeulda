@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GDD | 원-달러 괴리율 대시보드</title>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1358990250005511" crossorigin="anonymous"></script>
-    
+    <script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1YNDRL9V4F"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-1YNDRL9V4F');
+      gtag('js', new Date()); gtag('config', 'G-1YNDRL9V4F');
     </script>
-
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -31,19 +28,20 @@
             --accent-color: #0071e3;
             --secondary-text: #86868b;
             --border-color: rgba(128,128,128,0.1);
+            --red: #ff453a;
+            --blue: #0a84ff;
         }
         [data-theme='dark'] {
             --bg-color: #000000;
             --text-color: #f5f5f7;
             --card-bg: #1c1c1e;
-            --accent-color: #0a84ff;
             --secondary-text: #a1a1a6;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro KR", "Pretendard", sans-serif;
             background-color: var(--bg-color); color: var(--text-color);
-            margin: 0; padding: 0; line-height: 1.6; letter-spacing: -0.02em; transition: all 0.3s ease;
+            margin: 0; line-height: 1.6; letter-spacing: -0.02em; transition: 0.3s;
         }
 
         header {
@@ -57,90 +55,72 @@
         .btn-group { display: flex; gap: 8px; }
         .btn-group button {
             width: 40px; height: 40px; border-radius: 12px; border: none; cursor: pointer;
-            background: var(--card-bg); color: var(--text-color); font-size: 1rem; transition: 0.2s;
+            background: var(--card-bg); color: var(--text-color); transition: 0.2s;
         }
 
         .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
 
-        .ad-slot {
-            background: var(--card-bg);
-            display: flex; align-items: center;
-            color: var(--secondary-text); font-size: 0.8rem; overflow: hidden;
-            justify-content: center; /* 0. 광고를 가로 중앙으로 */ 
-            margin-top: 40px;       /* 1. 박스 자체 마진을 중간으로 */    
-            margin-bottom: 40px;      /* 2. 박스 자체 마진을 중간으로 */
-            margin-left: auto;       /* 2. 박스 자체를 가로 중앙으로 */ 
-            margin-right: auto;      /* 3. 박스 자체를 가로 중앙으로 */
-        }
-        .ad-top { height: 50px; width: 320px} /* KAKAO ADFIT TOP SIZE 320*50 */
-        .ad-mid { height: 250px; margin: 60px 0; } /* KAKAO ADFIT MID SIZE 320*100 */
- 
+        /* 광고 슬롯 디자인 */
+        .ad-slot { display: flex; justify-content: center; margin: 30px auto; overflow: hidden; }
+        .ad-top { height: 50px; width: 320px; }
+        .ad-mid { height: 50px; width: 320px; }
+
+        /* 분석 메인 카드 */
         .analysis-card {
             background: linear-gradient(135deg, var(--accent-color), #5856d6);
-            color: white; padding: 40px 20px; border-radius: 32px;
+            color: white; padding: 50px 20px; border-radius: 32px;
             text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            position: relative; cursor: help; margin-top: 20px;
-        }
-        .analysis-card:hover::after {
-            content: "괴리율은 이렇게 산출했어요:\A (원화 변동률 - 달러 변동률)\A\A 달러의 변동 대비 원화의 변동 정도를 나타내어요.\A 편차가 작을수록 달러와 원화의 흐름이 같다고 해석할 수 있어요.";
-            position: absolute; bottom: -125px; left: 50%; transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.95); color: white; padding: 18px;
-            border-radius: 15px; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap;
-            z-index: 2000; width: 280px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: none;
         }
         .gap-value { font-size: 5rem; font-weight: 900; margin: 10px 0; letter-spacing: -0.01em; }
 
-        .history-bar {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 12px; margin: 25px 0 60px 0;
-        }
+        /* 히스토리 바 */
+        .history-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 25px 0 60px 0; }
         .history-item {
             background: var(--card-bg); padding: 18px 10px; border-radius: 20px;
             text-align: center; border: 1px solid var(--border-color);
         }
         .history-label { font-size: 0.75rem; font-weight: 700; color: var(--secondary-text); margin-bottom: 4px; }
         .history-value { font-size: 1.2rem; font-weight: 800; }
-        .val-up { color: #ff453a; }
-        .val-down { color: #0a84ff; }
+        .val-up { color: var(--red); }
+        .val-down { color: var(--blue); }
 
-        .section-title { font-size: 2.5rem; font-weight: 800; margin-top: 40px; margin-bottom: 20px; letter-spacing: -0.04em; }
-        .section-p { font-size: 1.1rem; font-weight: 200; var(--text-color); opacity: 0.8; margin-bottom: 20px; }
+        /* 타이틀 및 차트 */
+        .section-title { font-size: 2.2rem; font-weight: 800; margin-top: 40px; margin-bottom: 10px; letter-spacing: -0.04em; }
         .chart-container {
             height: 500px; background: var(--card-bg); border-radius: 20px;
-            overflow: hidden; margin-bottom: 20px;
-            border: 2px solid var(--border-color) !important; 
-            box-sizing: border-box; padding: 2px; 
+            overflow: hidden; margin-bottom: 20px; border: 1px solid var(--border-color);
         }
 
-        .guide-box { background: var(--card-bg); border-radius: 32px; padding: 20px 40px; margin-top: 20px; }
+        /* 용어 가이드 섹션 */
+        .guide-box { background: var(--card-bg); border-radius: 32px; padding: 40px; margin-top: 40px; }
         .dict-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .dict-item { background: var(--bg-color); padding: 30px; border-radius: 24px; border: 1px solid var(--border-color); }
-        .dict-item h4 { font-size: 1.5rem; font-weight: 800; color: var(--accent-color); margin: 0 0 15px 0; }
-        .dict-item p { font-size: 1rem; color: var(--text-color); opacity: 0.8; margin: 0; }
-        
-        .currency-list {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-            margin-top: 15px; padding: 10px; background: var(--card-bg); border-radius: 10px; font-size: 0.8rem; font-weight: 500; text-align: center;
+        .dict-item { background: var(--bg-color); padding: 25px 30px 30px 30px; border-radius: 24px; border: 1px solid var(--border-color); }
+        .dict-item h4 { font-size: 1.4rem; font-weight: 800; color: var(--accent-color); margin: 0 0 12px 0; }
+        .dict-item h5 { font-size: 1.1rem; font-weight: 700; color: var(--text-color); margin: 0 0 10px 0; } /* margin-top 0 유지 */
+
+        /* 시각적 계산법 */
+        .visual-formula {
+            background: var(--bg-color); padding: 30px 20px; border-radius: 24px;
+            border: 1px solid var(--border-color); display: flex; align-items: center;
+            justify-content: center; gap: 12px; margin: 20px 0; flex-wrap: wrap;
         }
+        .formula-unit { padding: 10px 18px; border-radius: 12px; font-weight: 800; background: var(--card-bg); border: 1px solid var(--border-color); font-size: 1rem; }
+        .formula-operator { font-size: 1.2rem; font-weight: 300; color: var(--secondary-text); }
 
-        footer { padding: 80px 20px; border-top: 1px solid var(--border-color); margin-top: 50px; }
-        .contact-area { text-align: center; margin-bottom: 40px; }
-        .contact-link { font-size: 1.2rem; font-weight: 800; color: var(--accent-color); text-decoration: none; }
-        .disclaimer { font-size: 0.8rem; color: var(--secondary-text); line-height: 1.8; text-align: justify; max-width: 800px; margin: 50px auto; }
-        .copyright {font-size: 0.8rem; color: var(--secondary-text); line-height: 1.5; text-align: center; margin-bottom: 0px;}
-
+        footer { padding: 60px 20px; text-align: center; border-top: 1px solid var(--border-color); margin-top: 50px; }
+        .disclaimer-box { 
+            background: var(--card-bg); padding: 25px; border-radius: 20px; 
+            font-size: 0.85rem; color: var(--secondary-text); line-height: 1.8;
+            max-width: 850px; margin: 0 auto 40px; border: 1px solid var(--border-color); text-align: justify;
+        }
+        .contact-link { font-size: 1.1rem; font-weight: 700; color: var(--accent-color); text-decoration: none; }
+        
         #toast {
             position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.9); color: white; padding: 14px 28px;
-            border-radius: 50px; font-size: 0.9rem; font-weight: 600; z-index: 3000; display: none;
+            background: rgba(0,0,0,0.9); color: white; padding: 12px 24px;
+            border-radius: 50px; font-size: 0.9rem; z-index: 3000; display: none;
         }
-        .show-toast { display: block !important; animation: fadeInOut 2s ease; }
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translate(-50%, 20px); }
-            15% { opacity: 1; transform: translate(-50%, 0); }
-            85% { opacity: 1; transform: translate(-50%, 0); }
-            100% { opacity: 0; transform: translate(-50%, 20px); }
-        }
+        .show-toast { display: block !important; }
     </style>
 </head>
 <body data-theme="dark">
@@ -149,7 +129,7 @@
     <header>
         <div class="logo">FX <span>GDD</span></div>
         <div class="btn-group">
-            <button onclick="refreshPage()" title="새로고침">🔄</button>
+            <button onclick="fetchData()" title="새로고침">🔄</button>
             <button onclick="copyPageLink()" title="링크 복사">🔗</button>
             <button id="theme-btn" onclick="toggleTheme()" title="테마 변경">☀️</button>
         </div>
@@ -157,16 +137,17 @@
 
     <div class="container">
         <div class="ad-slot ad-top">
-        <ins class="kakao_ad_area" style="display:none;"
-            data-ad-unit = "DAN-nisbCvB95Ya1yluT"
-            data-ad-width = "320"
-            data-ad-height = "50"></ins>
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-dEhpXpkOjXZDfnYU" data-ad-width="320" data-ad-height="50"></ins>
         </div>
 
         <section class="analysis-card">
-            <div style="font-size: 1.5rem; font-weight: 700; opacity: 0.8; margin-bottom: 10px; text-transform: uppercase;">DXY 대비 원화 환율 괴리율</div>
+            <div id="market-status-badge" style="display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; margin-bottom: 15px; background: rgba(255,255,255,0.2);">
+                시장 확인 중...
+            </div>
+            <div style="font-weight: 700; opacity: 0.8; text-transform: uppercase; font-size: 1.1rem;">DXY 대비 원화 환율 괴리율</div>
             <div class="gap-value" id="gap-percent">0.00%</div>
             <div id="gap-desc" style="font-weight: 700; background: rgba(0,0,0,0.2); display: inline-block; padding: 8px 24px; border-radius: 50px; font-size: 0.95rem;">데이터를 불러오는 중...</div>
+            <div id="last-update" style="font-size: 0.75rem; opacity: 0.6; margin-top: 15px;"></div>
         </section>
 
         <div class="history-bar">
@@ -177,98 +158,114 @@
         </div>
 
         <h2 class="section-title">달러 인덱스 (DXY)</h2>
-        <p class="section-p">달러 인덱스(DXY)는 전 세계 주요 통화 대비 달러의 절대적인 가치를 나타내므로, 환율 변동이 단순히 '우리나라의 경제 상황' 때문인지 아니면 '글로벌 달러 강세'라는 거대한 흐름 때문인지를 구분하여 시장 흐름을 파악하기 위해 필요해요.</p>
         <div class="chart-container" id="dxy_chart"></div>
 
-        <!--<div class="ad-slot ad-mid">구글 애드센스를 위한 광고 심사 영역입니다</div>-->
+        <div class="ad-slot ad-mid">
+            <ins class="kakao_ad_area" style="display:none;" data-ad-unit="DAN-xp8S84z7t1Puzhty" data-ad-width="300" data-ad-height="250"></ins>
+        </div>
 
         <h2 class="section-title">원-달러 환율 (USD/KRW)</h2>
-        <p class="section-p">원-달러 환율은 1 미국 달러(USD)를 사기 위해 원화(KRW)를 얼마나 지불해야 하는지 나타내는 지표에요. 환율이 올랐다는 것은 1 미국 달러를 더욱 비싼 돈을 내고 구매해야 한다는 의미이고, 환율이 내렸다는 것은 1 미국 달러를 상대적으로 저렴하게 구매할 수 있다는 뜻이에요.</p>
         <div class="chart-container" id="fx_chart"></div>
 
         <section class="guide-box">
-            <div style="text-align:left;">
-                <h2 class="section-title">용어 가이드</h2>
-                <p style="color: var(--secondary-text); font-size: 1.5rem; margin-bottom: 30px;">어려운 금융 용어, 쉽게 알아보아요.</p>
+            <div style="text-align: center; margin-bottom: 50px; border-bottom: 1px solid var(--border-color); padding-bottom: 40px;">
+                <h2 style="font-size: 2.2rem; font-weight: 800; line-height: 1.6; letter-spacing: -0.05em;">
+                    <span style="opacity: 0.5; font-weight: 400;">미국 달러가 걷고 있을 때,</span><br>
+                    대한민국 원화도 과연 <span style="color: var(--accent-color);">같이 걷고 있을까요?</span>
+                </h2>
+                <p style="color: var(--secondary-text); margin-top: 12px; font-size: 1.1rem;">
+                    우리는 이 변화를 보고자 했습니다.
+                </p>
             </div>
+
+            <h2 class="section-title" style="margin-top:0; text-align:center;">용어 가이드</h2>
+            <p style="color: var(--secondary-text); text-align:center; margin-bottom: 40px;">어려운 지표를 알기 쉽게 설명해 드릴게요.</p>
+
             <div class="dict-grid">
-                <div class="dict-item" style="grid-column: 1 / -1; border-top: 5px solid var(--accent-color);">
-                    <h4>⚖️ 괴리율</h4>
-                    <p>달러 인덱스의 변동폭과 원-달러 환율의 변동폭 사이의 차이를 의미해요. 이 수치는 0을 기준으로 양(+)과 음(-) 양쪽 모든 방향으로 움직일 수 있어요.</p>
-                    <p style="font-size: 0.8rem; color: var(--secondary-text); margin-top: 10px; line-height: 1.4; border-top: 1px dashed var(--border-color); padding-top: 10px;">
-                     <span style="color: var(--accent-color); font-weight: 700;">💡 </span>
-                    괴리율 지표가 최근 한 달 사이 큰 폭으로 움직였다면 이는 달러의 움직임과 별개로 원화의 가치 변동이 크다는 신호에요. 다양한 요인을 점검하여 자신만의 투자 전략을 재점검하면 좋아요.</p>
-                </div>
-                
-                <div class="dict-item">
-                    <h4>💵 달러 인덱스 (DXY)</h4>
-                    <p>1973년 기준점(100)을 중심으로 주요 6개국 통화 대비 달러 가치를 산출한 지수에요. 주요 6개국 통화와 그 비중은 다음과 같아요.</p>
-                    <div class="currency-list">
-                        <span>🇪🇺 EUR 57.6%</span><span>🇯🇵 JPY 13.6%</span>
-                        <span>🇬🇧 GBP 11.9%</span><span>🇨🇦 CAD 9.1%</span>
-                        <span>🇸🇪 SEK 4.2%</span><span>🇨🇭 CHF 3.6%</span>
+                <div class="dict-item" style="grid-column: 1 / -1; border-top: 5px solid var(--accent-color); padding-top: 30px;">
+                    <h4>⚖️ GDD 괴리율</h4>
+                    <p style="color: var(--secondary-text); font-size: 0.9rem; margin-bottom: 15px;">글로벌 시대에 더 이상 환율은 대내적 요인 하나에 의해 움직이지 않아요. 대외적 요인에 의해 움직이는 경우가 더러 있지요.</p>
+                    <p><strong>GDD 괴리율</strong>은 <strong>달러가 변한 정도에 비해 원화가 얼마나 더 많이 변했는지</strong>를 숫자로 나타낸 지표예요. 시장이 평소와 다르게 움직이고 있지는 않은지 확인할 수 있어요.</p>
+                    
+                    <div class="visual-formula">
+                        <div class="formula-unit">현재 환율 변동률 (%)</div>
+                        <div class="formula-operator">−</div>
+                        <div class="formula-unit">현재 달러지수 변동률 (%)</div>
+                        <div class="formula-operator">=</div>
+                        <div class="formula-unit" style="color: var(--accent-color); border-color: var(--accent-color);">GDD 괴리율</div>
                     </div>
-                    <p style="font-size: 0.8rem; color: var(--secondary-text); margin-top: 10px; line-height: 1.4; border-top: 1px dashed var(--border-color); padding-top: 10px;">
-                        <span style="color: var(--accent-color); font-weight: 700;">💡 </span> 
-                        유로화(EUR)의 비중이 절반이 넘어요. 따라서 달러 인덱스는 유럽 경제와 유로화의 변동에 민감하게 반응해요.
+                    <p style="font-size: 0.85rem; color: var(--secondary-text); text-align: center;">
+                        * 모든 변동률은 <strong>실시간 현재가</strong>를 <strong>과거 종가</strong>로 나눠서 계산해요.
                     </p>
                 </div>
 
                 <div class="dict-item">
-                    <h4>📅 환율 시장과 주말</h4>
-                    <p>외환 시장은 토요일 새벽(한국 시간)부터 월요일 아침까지는 공식적인 거래가 중단돼요. 주말 동안 대시보드의 괴리율은 금요일 종가를 기준으로 고정되며, 월요일 개장 시 주말 사이 발생한 글로벌 뉴스가 한꺼번에 반영되어 급변할 수 있어요.</p>
+                    <h5 style="margin-top:0;">📈 수치를 어떻게 읽나요?</h5>
+                    <p style="font-size: 0.95rem; line-height: 1.8; margin: 0;">
+                        <span style="display: block; margin-bottom: 16px;">
+                            <span style="color: var(--red); font-weight: 700;">● 양(+)의 괴리라면:</span> 
+                            달러는 걷고 있는데 원화는 잘 걷지 못하거나 잠시 쉬고 있는 상태라고 해석할 수 있어요.
+                        </span>
+                        <span style="display: block;">
+                            <span style="color: var(--blue); font-weight: 700;">● 음(-)의 괴리라면:</span> 
+                            달러가 아무리 달려도 원화가 달러보다 더 잘 달리고 있다고 해석할 수 있어요.
+                        </span>
+                    </p>
                 </div>
 
                 <div class="dict-item">
-                    <h4>💱 원-달러 환율의 특징</h4>
-                    <p>원화는 대표적인 '위험 자산' 통화로 분류돼요. 세계적으로 경기가 좋을 때는 대한민국 원화의 가치가 상승(환율 하락)하고, 경제의 불확실성이 커지면 미국 달러라는 안전 자산으로 수요가 몰리며 가치가 하락(환율 상승)하는 경향이 뚜렷한 편이에요.</p>
+                    <h5 style="margin-top:0;">📅 기준 날짜는 '종가'예요</h5>
+                    <p style="font-size: 0.95rem;">지표의 정확도를 위해 <strong>3일, 7일, 14일, 30일 전의 마지막 거래 종가</strong>를 기준점으로 사용해요.</p>
+                    <p style="font-size: 0.8rem; color: var(--secondary-text); margin-top: 10px;">
+                        * <strong>지금 실시간 시세</strong>와 <strong>과거 종가</strong>를 비교한 결과예요.
+                    </p>
+                </div>
+
+                <div class="dict-item" style="border: 2px dashed var(--border-color); background: transparent; display: flex; align-items: center; justify-content: center; text-align: center; cursor: pointer;" onclick="document.getElementById('email-link').click();">
+                    <div>
+                        <p style="color: var(--secondary-text); font-weight: 700; margin-bottom: 5px;">더 궁금한 데이터가 있나요?</p>
+                        <p style="font-size: 0.85rem; color: var(--secondary-text); opacity: 0.8;">자유롭게 문의해 주세요! ✉️</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <footer>
-            <div class="contact-area">
-                <p style="margin-bottom: 10px; font-weight: 700;">사이트 이용 문의 및 피드백</p>
-                <a href="#" class="contact-link" id="email-link" data-user="fx-gdd" data-domain="gddbook.co.kr">Loading...</a>
+            <div class="disclaimer-box">
+                <strong>꼭 확인해 주세요!</strong><br>
+                본 페이지의 모든 분석은 투자 참고용 자료입니다. 투자 결과에 대한 법적 책임의 증거로 사용될 수 없습니다. 데이터는 Yahoo Finance를 통해 제공받으며 실제 시세와 미세한 차이가 발생할 수 있습니다.
             </div>
-            <div class="disclaimer">
-                <strong>면책조항 (Disclaimer):</strong> 본 페이지에서 제공하는 모든 데이터와 해석은 오직 참고 용도로만 사용 가능해요. 모든 데이터와 해석은 절대 투자 권유, 유도 그리고 강요 등으로 해석될 수 없어요. 그 어떠한 경우에도 투자 결과에 대한 법적 책임의 근거로 사용될 수 없다는 점 유의해주세요. 제공하는 모든 데이터는 네트워크 환경이나 소스 제공처의 상황에 따라 시간 지연으로 인한 실제 시장 가격과 차이가 발생할 수 있어요. 모든 투자 결정은 투자자 자신의 판단과 책임 아래에 이루어져야 하며, 본 서비스는 투자 손실에 대해 책임을 지지 않아요.
-            </div>
+            
+            <a href="#" class="contact-link" id="email-link" data-user="fx-gdd" data-domain="gddbook.co.kr">Loading...</a>
+
             <div class="copyright">
                 <p>Copyright © 2026 깃들다 All rights reserved.</p>
-                    <p>
-                        <a href="service.html" style="color: var(--secondary-text); text-decoration: none; font-size: 0.8rem; margin-right: 20px;">서비스 이용안내</a>
-                        <a href="privacy.html" style="color: var(--secondary-text); text-decoration: none; font-size: 0.8rem; ">개인정보 처리방침</a>
-                        
-                    </p>
+                <p>
+                    <a href="service.html" style="color: var(--secondary-text); text-decoration: none; margin-right: 20px;">서비스 이용안내</a>
+                    <a href="privacy.html" style="color: var(--secondary-text); text-decoration: none;">개인정보 처리방침</a>
+                </p>
             </div>
         </footer>
     </div>
 
-        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
-        // [수정] 웹 앱 URL - Google Spreadsheet Appsscript
         const API_URL = "https://script.google.com/macros/s/AKfycbzltPCZOU_T4jaFoXBjjkdRVIIE3R0GhDPbVTmkhw5Dpi2rfFVQdZhB74R1Z2WO_PdX/exec";
 
         function showToast(msg) {
             const t = document.getElementById('toast');
-            if(!t) return;
-            t.innerText = msg;
-            t.classList.add('show-toast');
+            t.innerText = msg; t.classList.add('show-toast');
             setTimeout(() => t.classList.remove('show-toast'), 2000);
         }
 
         function copyPageLink() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                showToast("링크 복사 완료! 🔗");
-            });
+            navigator.clipboard.writeText(window.location.href).then(() => showToast("링크가 복사되었어요! 🔗"));
         }
 
         function createCharts(theme = 'dark') {
-            document.getElementById('dxy_chart').innerHTML = "";
-            document.getElementById('fx_chart').innerHTML = "";
-            new TradingView.widget({ "autosize": true, "symbol": "CAPITALCOM:DXY", "interval": "60", "range": "7D", "theme": theme, "container_id": "dxy_chart", "hide_side_toolbar": true });
-            new TradingView.widget({ "autosize": true, "symbol": "FX_IDC:USDKRW", "interval": "60", "range": "7D", "theme": theme, "container_id": "fx_chart", "hide_side_toolbar": true });
+            const cfg = (s, id) => ({ "autosize": true, "symbol": s, "interval": "60", "range": "7D", "theme": theme, "container_id": id, "hide_side_toolbar": true });
+            new TradingView.widget(cfg("CAPITALCOM:DXY", "dxy_chart"));
+            new TradingView.widget(cfg("FX_IDC:USDKRW", "fx_chart"));
         }
 
         function toggleTheme() {
@@ -277,88 +274,64 @@
             body.setAttribute('data-theme', theme);
             createCharts(theme);
             document.getElementById('theme-btn').innerText = theme === 'dark' ? '☀️' : '🌙';
-            showToast(`${theme === 'dark' ? '다크' : '라이트'} 모드로 전환했어요`);
+            showToast(`${theme === 'dark' ? '다크' : '라이트'} 모드`);
         }
 
-        function refreshPage() { 
-            showToast("데이터 업데이트 중.. 🔄");
-            fetchData(); 
-        }
-
-        // [핵심] 데이터 로드 함수 최적화
         async function fetchData() {
             const gapEl = document.getElementById('gap-percent');
             const descEl = document.getElementById('gap-desc');
+            const updateEl = document.getElementById('last-update');
+            const statusBadge = document.getElementById('market-status-badge');
             
             try {
-                // 캐시 방지를 위해 랜덤 쿼리 추가
-                const response = await fetch(`${API_URL}?t=${new Date().getTime()}`);
-                
-                if (!response.ok) throw new Error('네트워크 응답 에러');
-                
-                const data = await response.json();
-                
-                // values[0]은 시트의 2행(첫 번째 데이터행)입니다.
-                const row = data.values[0]; 
-                if (!row || row.length < 7) {
-                    descEl.innerText = "시트 데이터 구성 부족";
-                    return;
+                const r = await fetch(`${API_URL}?t=${Date.now()}`);
+                const d = await r.json();
+                const row = d.values[0]; // [환율, 달러지수, isOpen, 3일, 7일, 14일, 30일]
+                const n = v => isNaN(parseFloat(v)) ? 0 : parseFloat(v);
+
+                // 장 상태 업데이트
+                if (row[2] === 1) {
+                    statusBadge.innerText = "● 외환 시장 영업 중";
+                    statusBadge.style.color = "#4cd964";
+                    statusBadge.style.background = "rgba(76, 217, 100, 0.15)";
+                } else {
+                    statusBadge.innerText = "○ 외환 시장 휴장";
+                    statusBadge.style.color = "#ff9500";
+                    statusBadge.style.background = "rgba(255, 149, 0, 0.15)";
                 }
 
-                const n = (v) => {
-                    const parsed = parseFloat(v);
-                    return isNaN(parsed) ? 0 : parsed;
-                };
+                // 수치 업데이트
+                const mGap = n(row[3]); // 3일 괴리율을 메인으로 표시 (원하시는 기간으로 변경 가능)
+                gapEl.innerText = (mGap > 0 ? "+" : "") + mGap.toFixed(2) + "%";
+                descEl.innerText = Math.abs(mGap) >= 0.5 ? "유의미한 괴리가 생겼어요" : "달러 가치의 흐름과 유사해요";
 
-                // 1. 메인 괴리율 (3일 기준 데이터 row[3] 사용)
-                const mainGap = n(row[3]);
-                gapEl.innerText = (mainGap > 0 ? "+" : "") + mainGap.toFixed(2) + "%";
-                gapEl.style.color = "ffffff";
-                
-                // 2. 히스토리 바 업데이트 (row[3]~row[6])
-                const updateHist = (id, val) => {
-                    const el = document.getElementById(id);
-                    if (el) {
-                        const num = n(val);
-                        el.innerText = (num > 0 ? "+" : "") + num.toFixed(2) + "%";
-                        el.className = "history-value " + (num > 0 ? "val-up" : "val-down");
-                    }
-                };
+                ['3d', '7d', '14d', '30d'].forEach((t, i) => {
+                    const el = document.getElementById(`hist-${t}`);
+                    const val = n(row[i+3]);
+                    el.innerText = (val > 0 ? "+" : "") + val.toFixed(2) + "%";
+                    el.className = "history-value " + (val > 0 ? "val-up" : "val-down");
+                });
 
-                updateHist('hist-3d', row[3]);
-                updateHist('hist-7d', row[4]);
-                updateHist('hist-14d', row[5]);
-                updateHist('hist-30d', row[6]);
-
-                descEl.innerText = Math.abs(mainGap) >= 0.5 ? "전일 대비 유의미한 괴리 발생" : "달러 가치의 흐름과 유사해요";
-
+                updateEl.innerText = `최근 동기화: ${new Date().toLocaleTimeString()}`;
             } catch (e) { 
-                console.error("Fetch 에러:", e);
-                descEl.innerText = "연동 실패: 문의 필요!"; 
+                descEl.innerText = "데이터 연결 실패"; 
             }
         }
 
-        window.addEventListener('load', () => {
+        window.onload = () => {
             createCharts('dark'); 
             fetchData();
             
-            // 이메일 복사 로직
-            const emailEl = document.getElementById('email-link');
-            if (emailEl) {
-                const fullEmail = emailEl.dataset.user + '@' + emailEl.dataset.domain;
-                emailEl.href = 'mailto:' + fullEmail;
-                emailEl.innerText = fullEmail;
-                emailEl.onclick = (e) => { 
-                    e.preventDefault();
-                    navigator.clipboard.writeText(fullEmail).then(() => showToast("이메일 주소가 복사되었습니다! 🔗")); 
-                };
-            }
+            const em = document.getElementById('email-link');
+            const mail = `${em.dataset.user}@${em.dataset.domain}`;
+            em.innerText = mail;
+            em.onclick = (e) => { 
+                e.preventDefault(); 
+                navigator.clipboard.writeText(mail).then(() => showToast("이메일 주소 복사 완료! 🔗")); 
+            };
             
-            // 5분 간격 자동 업데이트
-            setInterval(fetchData, 300000); 
-        });
+            setInterval(fetchData, 300000); // 5분마다 갱신
+        };
     </script>
-
-<script type="text/javascript" src="//t1.kakaocdn.net/kas/static/ba.min.js" async></script>
 </body>
 </html>
